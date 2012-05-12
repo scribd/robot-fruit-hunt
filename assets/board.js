@@ -170,3 +170,7 @@ function get_opponent_item_count(type) {
 function get_total_item_count(type) {
     return Board.totalItems[type-1];
 }
+
+function trace(mesg) {
+    console.log(mesg);
+}
