@@ -1,9 +1,13 @@
 var Board = {
     init: function() {
+        var fullBoard;
+
         // initialize board
         HEIGHT = Math.min(Math.floor(Math.random() * 11) + 5, 15);
         WIDTH = Math.min(Math.floor(Math.random() * 11) + 5, 15);
         Board.board = new Array(WIDTH);
+
+
         for (var i=0; i<WIDTH; i++) {
             Board.board[i] = new Array(HEIGHT);
             for (var j=0; j<HEIGHT; j++) {
@@ -33,11 +37,13 @@ var Board = {
             }
         }
 
+        fullBoard = (Board.totalItems.reduce( function(a,b) { return a+b;}) == HEIGHT*WIDTH);
+
         // get them the same starting position
         do {
             x = Math.min(Math.floor(Math.random() * WIDTH), WIDTH);
             y = Math.min(Math.floor(Math.random() * HEIGHT), HEIGHT);
-        } while (Board.board[x][y] != 0); 
+        } while (Board.board[x][y] != 0 && !fullBoard);  
         Board.myX = x;
         Board.myY = y;
         Board.oppX = x;
@@ -50,16 +56,16 @@ var Board = {
     processMove: function() {
         var myMove = make_move();
         var simpleBotMove = SimpleBot.makeMove();
-        if ((Board.myX == Board.oppX) && (Board.myY && Board.oppY) && (myMove == TAKE) && (simpleBotMove == TAKE)) {
+        if ((Board.myX == Board.oppX) && (Board.myY == Board.oppY) && (myMove == TAKE) && (simpleBotMove == TAKE) && Board.board[Board.myX][Board.myY] > 0) {
             Board.myBotCollected[Board.board[Board.myX][Board.myY]-1] = Board.myBotCollected[Board.board[Board.myX][Board.myY]-1] + 0.5;
             Board.simpleBotCollected[Board.board[Board.oppX][Board.oppY]-1] = Board.simpleBotCollected[Board.board[Board.oppX][Board.oppY]-1] + 0.5;
             Board.board[Board.myX][Board.myY] = 0; 
         } else {
-            if (myMove == TAKE) {
+            if (myMove == TAKE && Board.board[Board.myX][Board.myY] > 0) {
                 Board.myBotCollected[Board.board[Board.myX][Board.myY]-1]++;
                 Board.board[Board.myX][Board.myY] = 0; 
             }
-            if (simpleBotMove == TAKE) {
+            if (simpleBotMove == TAKE && Board.board[Board.oppX][Board.oppY] > 0) {
                 Board.simpleBotCollected[Board.board[Board.oppX][Board.oppY]-1]++;
                 Board.board[Board.oppX][Board.oppY] = 0; 
             }
