@@ -18,7 +18,7 @@ var Board = {
         // initialize items on board
         do {
             Board.numberOfItemTypes = Math.floor(Math.random() * 3 + 3);
-        } while(Board.numberOfItemTypes * Board.numberOfItemTypes > HEIGHT * WIDTH)
+        } while(Board.numberOfItemTypes * Board.numberOfItemTypes >= HEIGHT * WIDTH)
         Board.totalItems = new Array();
         Board.simpleBotCollected = new Array(Board.numberOfItemTypes);
         Board.myBotCollected = new Array(Board.numberOfItemTypes);
@@ -37,13 +37,11 @@ var Board = {
             }
         }
 
-        fullBoard = (Board.totalItems.reduce( function(a,b) { return a+b;}) == HEIGHT*WIDTH);
-
         // get them the same starting position
         do {
             x = Math.min(Math.floor(Math.random() * WIDTH), WIDTH);
             y = Math.min(Math.floor(Math.random() * HEIGHT), HEIGHT);
-        } while (Board.board[x][y] != 0 && !fullBoard);  
+        } while (Board.board[x][y] != 0);
         Board.myX = x;
         Board.myY = y;
         Board.oppX = x;
