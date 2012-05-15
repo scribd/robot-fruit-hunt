@@ -28,3 +28,8 @@
    border-top-color: #1b435e;
    background: #1b435e;
    }
+canvas {
+   position:absolute;
+   left:0px;
+   top:0px;
+}

@@ -1,12 +1,14 @@
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="assets/drawgame.css"/>
-<script src="assets/board.js"></script>
+<link rel="stylesheet" type="text/css" href="assets/css/drawgame.css"/>
+<script src="assets/js/board.js"></script>
+<script src="assets/js/grid.js"></script>
 <script src="mybot.js"></script>
-<script src="assets/simplebot.js"></script>
-<script src="assets/player.js"></script>
+<script src="assets/js/simplebot.js"></script>
+<script src="assets/js/player.js"></script>
 </head>
 <body onload="GamePlay.init()">
+<canvas id="grid"></canvas>
 <canvas id="game_view"></canvas>
 <div id="buttons">
 <span class="reset button">new game</span>

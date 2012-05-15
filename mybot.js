@@ -18,7 +18,3 @@ function make_move() {
 
    return PASS;
 }
-
-function trace(mesg) {
-   console.log(mesg);
-}
