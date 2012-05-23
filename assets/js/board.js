@@ -48,7 +48,12 @@ var Board = {
         Board.oppY = y;
     },
     newGame: function() {
-        if(new_game !== undefined) {
+        var new_game_exists = undefined;
+        try {
+            new_game_exists = new_game;
+        } catch(e) {
+        }
+        if(new_game_exists !== undefined) {
             new_game();
         }
         // SimpleBot currently doesn't need any sort of init, but if it did, it'd be called here too
