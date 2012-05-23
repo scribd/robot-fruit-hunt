@@ -9,4 +9,4 @@ ps: you should be able to ignore everything in assets/, but if you want to disab
        // to disable to opponent, uncomment the next line
        // return PASS;
 
-Uncomment the "return PASS;" and your bot will be free to roam the baord alone.
+Uncomment the "return PASS;" and your bot will be free to roam the board alone.
