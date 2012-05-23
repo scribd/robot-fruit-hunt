@@ -4,7 +4,8 @@ var GamePlay = {
         $('.pause').bind('click', function() { GamePlay.mode = "pause";});
         $('.play').bind('click', function() { GamePlay.mode = "play"; Board.processMove(); GamePlay.draw();});
         $('.forward').bind('click', function() { Board.processMove(); GamePlay.draw();});
-        $('.reset').bind('click', function() { GamePlay.setupGame();});
+        $('.newgame').bind('click', function() { GamePlay.setupNewGame();});
+        $('.reset').bind('click', function() { Board.reset();});
         var itemImageUrls = ["assets/images/FruitApple.png", "assets/images/FruitBanana.png", "assets/images/FruitCherry.png", "assets/images/FruitMelon.png", "assets/images/FruitOrange.png"];
         GamePlay.itemImages = new Array();
         for (var i=0; i<itemImageUrls.length; i++) {
@@ -16,13 +17,14 @@ var GamePlay = {
         GamePlay.player_one_image.src = "assets/images/FruitBlueBot.png";
         GamePlay.player_two_image = new Image();
         GamePlay.player_two_image.src = "assets/images/FruitPurpleBot.png";
-        GamePlay.setupGame();
+        GamePlay.itemImages[itemImageUrls.length - 1].onload = function(){
+            GamePlay.setupNewGame();
+        }
     },
-    setupGame: function() {
+    setupNewGame: function() {
         Board.init();
         Board.newGame();
         GamePlay.itemTypeCount = get_number_of_item_types();
-        GamePlay.mode = "pause";
         document.getElementById('grid').width = GamePlay.itemTypeCount * 50 + WIDTH * 50;
         document.getElementById('grid').height = HEIGHT * 50;
         document.getElementById('game_view').width = GamePlay.itemTypeCount * 50 + WIDTH * 50;
@@ -30,17 +32,45 @@ var GamePlay = {
         $('#buttons').css('padding-left', GamePlay.itemTypeCount * 50);
         $('#buttons').css('padding-top', HEIGHT * 50);
         Grid.draw();
+        GamePlay.start();
+    },
+    start: function() {
+        GamePlay.mode = "pause";
         GamePlay.draw();
     },
     draw: function() {
         var ctx = GamePlay.canvas.getContext('2d');
         ctx.clearRect(0,0,GamePlay.canvas.width,GamePlay.canvas.height);
-        GamePlay.drawPlayerOne(ctx, Board.board);
-        GamePlay.drawPlayerTwo(ctx, Board.board);
         GamePlay.drawItems(ctx, Board.board);
+        GamePlay.drawPlayerTwo(ctx, Board.board);
+        GamePlay.drawPlayerOne(ctx, Board.board);
         GamePlay.displayScore(ctx, Board.board);
         if (GamePlay.mode == "play") {
            if (Board.noMoreItems()) {
+               var score = 0;
+               for (var i=0; i<GamePlay.itemTypeCount; i++) {
+                   if (Board.myBotCollected[i] > Board.simpleBotCollected[i]) {
+                       score = score + 1;
+                   }
+                   if (Board.myBotCollected[i] < Board.simpleBotCollected[i]) {
+                       score = score - 1;
+                   }
+               }
+               if (score > 0) {
+                   ctx.font = "30px Arial";
+                   ctx.fillStyle = "#000";
+                   ctx.fillText("You win!", 0, 275);
+               }
+               if (score < 0) {
+                   ctx.font = "30px Arial";
+                   ctx.fillStyle = "#000";
+                   ctx.fillText("You lose!", 0, 275);
+               }
+               if (score == 0) {
+                   ctx.font = "30px Arial";
+                   ctx.fillStyle = "#000";
+                   ctx.fillText("You tie!", 0, 275);
+               }
                GamePlay.mode = "pause";
                return;
            }
@@ -52,23 +82,31 @@ var GamePlay = {
     },
     displayScore: function(ctx, state) {
         ctx.font = "30px Arial";
-        ctx.fillStyle = "#82298E";
-        ctx.fillText("My Bot", 0, 50);
-        ctx.fillStyle = "#000";
-        for (var i=0; i<GamePlay.itemTypeCount; i++) {
-            ctx.fillText(Board.myBotCollected[i], 50*i, 100);
-        }
         ctx.fillStyle = "#366B76";
-        ctx.fillText("Simple Bot", 0, 150);
+        ctx.fillText("My Bot", 0, 50);
+        ctx.font = "15px Arial";
         ctx.fillStyle = "#000";
         for (var i=0; i<GamePlay.itemTypeCount; i++) {
-            ctx.fillText(Board.simpleBotCollected[i], 50*i, 200);
+            ctx.fillText(Board.myBotCollected[i].toFixed(1), 50*i, 75);
+            ctx.drawImage(GamePlay.itemImages[i], 52*i+15, 55, 25, 25);
         }
-        ctx.fillStyle = "#F00";
-        ctx.fillText("items left", 0, 250);
+        ctx.font = "30px Arial";
+        ctx.fillStyle = "#82298E";
+        ctx.fillText("Simple Bot", 0, 125);
+        ctx.font = "15px Arial";
         ctx.fillStyle = "#000";
         for (var i=0; i<GamePlay.itemTypeCount; i++) {
-            ctx.fillText(Board.totalItems[i]-Board.myBotCollected[i]-Board.simpleBotCollected[i], 50*i, 300);
+            ctx.fillText(Board.simpleBotCollected[i].toFixed(1), 50*i, 150);
+            ctx.drawImage(GamePlay.itemImages[i], 52*i+15, 130, 25, 25);
+        }
+        ctx.font = "30px Arial";
+        ctx.fillStyle = "#F00";
+        ctx.fillText("items left", 0, 200);
+        ctx.font = "15px Arial";
+        ctx.fillStyle = "#000";
+        for (var i=0; i<GamePlay.itemTypeCount; i++) {
+            ctx.fillText((Board.totalItems[i]-Board.myBotCollected[i]-Board.simpleBotCollected[i]).toFixed(1), 50*i, 225);
+            ctx.drawImage(GamePlay.itemImages[i], 52*i+15, 205, 25, 25);
         }
     },
     drawPlayerOne: function(ctx, state) {

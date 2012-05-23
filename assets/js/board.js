@@ -7,7 +7,6 @@ var Board = {
         WIDTH = Math.min(Math.floor(Math.random() * 11) + 5, 15);
         Board.board = new Array(WIDTH);
 
-
         for (var i=0; i<WIDTH; i++) {
             Board.board[i] = new Array(HEIGHT);
             for (var j=0; j<HEIGHT; j++) {
@@ -46,6 +45,14 @@ var Board = {
         Board.myY = y;
         Board.oppX = x;
         Board.oppY = y;
+        Board.initial_state = {};
+        jQuery.extend(true, Board.initial_state, Board);
+    },
+    reset: function() {
+        Board = Board.initial_state;
+        Board.initial_state = {};
+        jQuery.extend(true, Board.initial_state, Board);
+        GamePlay.start();
     },
     newGame: function() {
         var new_game_exists = undefined;
@@ -133,6 +140,7 @@ var Board = {
 // but rather a working model of it for the purposes of giving
 // you an environment to develop and debug in.
 
+// don't rely on these constants to be the exact value listed here
 var EAST = 1;
 var NORTH = 2;
 var WEST = 3;
