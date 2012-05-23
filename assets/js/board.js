@@ -48,7 +48,9 @@ var Board = {
         Board.oppY = y;
     },
     newGame: function() {
-        new_game();
+        if(new_game !== undefined) {
+            new_game();
+        }
         // SimpleBot currently doesn't need any sort of init, but if it did, it'd be called here too
     },
     processMove: function() {
