@@ -126,12 +126,13 @@ var Board = {
 // but rather a working model of it for the purposes of giving
 // you an environment to develop and debug in.
 
-var NORTH = 0;
-var SOUTH = 1;
-var EAST = 2;
+var EAST = 1;
+var NORTH = 2;
 var WEST = 3;
+var SOUTH = 4;
 var TAKE = 5;
 var PASS = 6;
+
 var HEIGHT;
 var WIDTH;
 
