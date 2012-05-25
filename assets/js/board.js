@@ -9,6 +9,8 @@ var Board = {
         WIDTH = Math.min(Math.floor(Board.random() * 11) + 5, 15);
 
         Board.board = new Array(WIDTH);
+        Board.move_num = 0;
+
 
         for (var i=0; i<WIDTH; i++) {
             Board.board[i] = new Array(HEIGHT);
@@ -79,6 +81,9 @@ var Board = {
         // SimpleBot currently doesn't need any sort of init, but if it did, it'd be called here too
     },
     processMove: function() {
+        Board.move_num++;
+        Board.move_start = new Date().getTime();
+
         var myMove = make_move();
         var simpleBotMove = SimpleBot.makeMove();
         if ((Board.myX == Board.oppX) && (Board.myY == Board.oppY) && (myMove == TAKE) && (simpleBotMove == TAKE) && Board.board[Board.myX][Board.myY] > 0) {
@@ -143,6 +148,8 @@ var Board = {
             Board.history[Board.oppX][Board.oppY] = 2;
         }
 
+        var elapsed = ((new Date().getTime() - Board.move_start) / 1000).toFixed(2);
+        console.log("["+Board.move_num+"] elapsed time: "+elapsed+"s");
 
     },
     noMoreItems: function() {
