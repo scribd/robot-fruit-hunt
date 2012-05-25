@@ -6,6 +6,15 @@ var GamePlay = {
         $('.forward').bind('click', function() { Board.processMove(); GamePlay.draw();});
         $('.newgame').bind('click', function() { GamePlay.setupNewGame();});
         $('.reset').bind('click', function() { Board.reset();});
+        $('#check_breadcrumbs').click(function(evt) {
+          if (evt.srcElement.checked) {
+            GamePlay.show_breadcrumbs = true;
+          } else {
+            GamePlay.show_breadcrumbs = false;
+          }
+        });
+
+        GamePlay.show_breadcrumbs = false;
         var itemImageUrls = ["assets/images/FruitApple.png", "assets/images/FruitBanana.png", "assets/images/FruitCherry.png", "assets/images/FruitMelon.png", "assets/images/FruitOrange.png"];
         GamePlay.itemImages = new Array();
         for (var i=0; i<itemImageUrls.length; i++) {
@@ -17,9 +26,16 @@ var GamePlay = {
         GamePlay.player_one_image.src = "assets/images/FruitBlueBot.png";
         GamePlay.player_two_image = new Image();
         GamePlay.player_two_image.src = "assets/images/FruitPurpleBot.png";
+        GamePlay.visitedImg = new Image();
+        GamePlay.visitedImg.src = "assets/images/FruitCellVisited.png";
+        GamePlay.bothVisitedImg = new Image();
+        GamePlay.bothVisitedImg.src = "assets/images/FruitCellVisitedBoth.png";
+        GamePlay.oppVisitedImg = new Image();
+        GamePlay.oppVisitedImg.src = "assets/images/FruitCellOppVisited.png";
         GamePlay.itemImages[itemImageUrls.length - 1].onload = function(){
             GamePlay.setupNewGame();
-        }
+        };
+
     },
     setupNewGame: function() {
         Board.init();
@@ -41,9 +57,9 @@ var GamePlay = {
     draw: function() {
         var ctx = GamePlay.canvas.getContext('2d');
         ctx.clearRect(0,0,GamePlay.canvas.width,GamePlay.canvas.height);
+        GamePlay.drawItems(ctx, Board.board, Board.history);
         GamePlay.drawPlayerTwo(ctx, Board.board);
         GamePlay.drawPlayerOne(ctx, Board.board);
-        GamePlay.drawItems(ctx, Board.board);
         GamePlay.displayScore(ctx, Board.board);
         if (GamePlay.mode == "play") {
            if (Board.noMoreItems()) {
@@ -115,11 +131,17 @@ var GamePlay = {
     drawPlayerTwo: function(ctx, state) {
         ctx.drawImage(GamePlay.player_two_image, GamePlay.itemTypeCount * 50 + Board.oppX * 50 - 2, Board.oppY * 50 - 2);
     },
-    drawItems: function(ctx, state) {
+    drawItems: function(ctx, state, history) {
         for (var i=0; i<WIDTH; i++) {
             for (var j=0; j<HEIGHT; j++) {
                 if (state[i][j] !== 0) {
                     ctx.drawImage(GamePlay.itemImages[state[i][j] - 1], GamePlay.itemTypeCount * 50 + i * 50, j * 50);
+                } else if (GamePlay.show_breadcrumbs && history[i][j]==1) {
+                    ctx.drawImage(GamePlay.visitedImg, GamePlay.itemTypeCount * 50 + i * 50, j * 50);
+                } else if (GamePlay.show_breadcrumbs && history[i][j]==2) {
+                    ctx.drawImage(GamePlay.oppVisitedImg, GamePlay.itemTypeCount * 50 + i * 50, j * 50);
+                } else if (GamePlay.show_breadcrumbs && history[i][j]==3) {
+                    ctx.drawImage(GamePlay.bothVisitedImg, GamePlay.itemTypeCount * 50 + i * 50, j * 50);
                 }
             }
         }
