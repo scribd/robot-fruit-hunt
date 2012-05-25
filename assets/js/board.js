@@ -133,12 +133,8 @@ var Board = {
             }
         }
 
-        if (Board.history[Board.myX][Board.myY] === 0) {
-            Board.history[Board.myX][Board.myY] = 1;
-        }
-        if (Board.history[Board.oppX][Board.oppY] === 0) {
-            Board.history[Board.oppX][Board.oppY] = 2;
-        }
+        Board.history[Board.myX][Board.myY] |= 1;
+        Board.history[Board.oppX][Board.oppY] |= 2;
 
 
     },
