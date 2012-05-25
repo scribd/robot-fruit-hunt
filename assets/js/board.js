@@ -14,6 +14,15 @@ var Board = {
             }
         }
 
+        Board.history = new Array(WIDTH);
+
+        for (var i=0; i<WIDTH; i++) {
+            Board.history[i] = new Array(HEIGHT);
+            for (var j=0; j<HEIGHT; j++) {
+                Board.history[i][j] = 0;
+            }
+        }
+
         // initialize items on board
         do {
             Board.numberOfItemTypes = Math.floor(Math.random() * 3 + 3);
@@ -123,6 +132,15 @@ var Board = {
                 Board.oppX = Board.oppX - 1;
             }
         }
+
+        if (Board.myX == Board.oppX && Board.myY == Board.oppY) {
+            Board.history[Board.myX][Board.myY] = 3;
+        } else {
+            Board.history[Board.myX][Board.myY] = 1;
+            Board.history[Board.oppX][Board.oppY] = 2;
+        }
+
+
     },
     noMoreItems: function() {
         for (var i=0; i<WIDTH; i++) {
