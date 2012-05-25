@@ -41,9 +41,9 @@ var GamePlay = {
     draw: function() {
         var ctx = GamePlay.canvas.getContext('2d');
         ctx.clearRect(0,0,GamePlay.canvas.width,GamePlay.canvas.height);
-        GamePlay.drawItems(ctx, Board.board);
         GamePlay.drawPlayerTwo(ctx, Board.board);
         GamePlay.drawPlayerOne(ctx, Board.board);
+        GamePlay.drawItems(ctx, Board.board);
         GamePlay.displayScore(ctx, Board.board);
         if (GamePlay.mode == "play") {
            if (Board.noMoreItems()) {
