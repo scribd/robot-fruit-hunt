@@ -52,6 +52,7 @@ var Board = {
         Board = Board.initial_state;
         Board.initial_state = {};
         jQuery.extend(true, Board.initial_state, Board);
+        Board.newGame();
         GamePlay.start();
     },
     newGame: function() {
