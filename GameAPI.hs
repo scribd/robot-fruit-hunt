@@ -48,21 +48,21 @@ hasItem field = if field > 0
 getNumberOfItemTypes :: Int
 getNumberOfItemTypes = length . nub . flatten $ getBoard
 
-getCount :: [(ItemType, Int)] -> ItemType -> Int
+getCount :: [(ItemType, Double)] -> ItemType -> Double
 getCount items type_ = snd . head . filter (\(typ_, count_) -> typ_ == type_) $ items
 
 -- c
-getMyItemCount :: ItemType -> Int
+getMyItemCount :: ItemType -> Double
 getMyItemCount = getCount items
   where items = %s
 
 -- c
-getOpponentItemCount :: ItemType -> Int
+getOpponentItemCount :: ItemType -> Double
 getOpponentItemCount = getCount items
   where items = %s
 
 -- c
-getTotalItemCount :: ItemType -> Int
+getTotalItemCount :: ItemType -> Double
 getTotalItemCount = getCount items
   where items = %s
 

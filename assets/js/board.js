@@ -1,8 +1,8 @@
-// TODO gray out the forward button until this move is completed
-// TODO play should wait for one move to finish before sending the next move.
+// TODO it keeps going even after the game is over. Stop processing the next move after that.
 
 var socket = new WebSocket("ws://localhost:3000/");
 var socket_connected = false;
+var can_make_next_move = true;
 socket.onopen = function(){  
     socket_connected = true;
     console.log("Socket to game server successfully opened.");  
@@ -135,9 +135,16 @@ var Board = {
         if (!socket_connected) {
             alert("I am not connected to the server. Please start the server with `ruby eventloop.rb` if you haven't already (and then refresh this page).\nIf you already started the server, your browser may not support websockets.");
         }
-        socket.send(JSON.stringify(playerData()));
+        if (can_make_next_move) {
+            socket.send(JSON.stringify(playerData()));
+            can_make_next_move = false;
+        } else {
+            console.log("...");
+            setTimeout(Board.processMove, 1000);
+        }
     },
     callback: function(move) {
+        can_make_next_move = true;
         console.log("player is moving.");
         var myMove = move;
         var simpleBotMove = SimpleBot.makeMove();
