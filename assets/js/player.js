@@ -3,7 +3,7 @@ var GamePlay = {
         GamePlay.canvas = document.getElementById('game_view');
         $('.pause').bind('click', function() { GamePlay.mode = "pause";});
         $('.play').bind('click', function() { GamePlay.mode = "play"; Board.processMove(); GamePlay.draw();});
-        $('.forward').bind('click', function() { Board.processMove(); GamePlay.draw();});
+        $('.forward').bind('click', function() { GamePlay.mode = "play"; Board.processMove(); GamePlay.draw(); GamePlay.mode = "pause";});
         $('.newgame').bind('click', function() { GamePlay.setupNewGame();});
         $('.reset').bind('click', function() { Board.reset();});
         $('#check_breadcrumbs').click(function(evt) {

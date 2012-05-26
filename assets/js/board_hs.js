@@ -60,6 +60,9 @@ Board.processMove = function() {
     if (!socket_connected) {
         alert("I am not connected to the server. Please start the server with `ruby eventloop.rb` if you haven't already (and then refresh this page).\nIf you already started the server, your browser may not support websockets.");
     }
+    if (GamePlay.mode == "pause") {
+        return null;
+    }
     if (can_make_next_move) {
         socket.send(JSON.stringify(playerData()));
         can_make_next_move = false;

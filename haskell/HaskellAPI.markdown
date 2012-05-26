@@ -28,7 +28,6 @@ getBoard :: [[ItemType]]
 -- there's no fruit there.
 hasItem :: ItemType -> Maybe ItemType
 
-
 -- Return the number of different fruit types. Each fruit type might be on the board
 -- multiple times (use getTotalItemCount type) to query how often).
 getNumberOfItemTypes :: Int
