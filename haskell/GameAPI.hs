@@ -66,9 +66,4 @@ getTotalItemCount = getCount items
 -- c
 __state = %s
 
-main = do
-   let res = runState makeMove __state
-   trace (show res) (print res)
-
-makeMove :: State (Map String String) Move
--- makeMove = return EAST
+main = print $ runState makeMove __state

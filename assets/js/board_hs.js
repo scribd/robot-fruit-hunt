@@ -14,6 +14,7 @@ socket.onmessage = function(msg){
     } else {
         console.log(move.trace);
         playerState = move.state;
+        $("#state .content").text(playerState);
         Board.callback(move.move);
     }
 };
@@ -53,11 +54,12 @@ var playerData = function() {
 Board.jsProcessMove = Board.processMove;
 
 Board.processMove = function() {
-    if (!socket_connected) {
-        alert("I am not connected to the server. Please start the server with `ruby eventloop.rb` if you haven't already (and then refresh this page).\nIf you already started the server, your browser may not support websockets.");
-    }
     if (GamePlay.mode == "pause" || player_lost) {
         return null;
+    }    
+    if (!socket_connected) {
+        alert("I am not connected to the server. Please start the server with `ruby eventloop.rb` if you haven't already (and then refresh this page).\nIf you already started the server, your browser may not support websockets.");
+        GamePlay.mode = "pause";
     }
     if (can_make_next_move) {
         socket.send(JSON.stringify(playerData()));
@@ -73,6 +75,5 @@ var make_move = null;
 Board.callback = function(move) {
     make_move = function() { return move; };
     can_make_next_move = true;
-    console.log("player is moving.");
     Board.jsProcessMove();
 };
