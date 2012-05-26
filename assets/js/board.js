@@ -1,3 +1,47 @@
+var socket = new WebSocket("ws://localhost:3000/");
+socket.onopen = function(){  
+    console.log("Socket to game server successfully opened.");  
+};
+
+socket.onmessage = function(msg){  
+    console.log(msg);
+    var move = JSON.parse(msg.data);
+    playerState = move.state;
+    Board.callback(move.move);
+};
+
+
+function render_items(func) {
+    items = "[(0,0),";
+    var n = Board.numberOfItemTypes;
+    for(var i=1; i <= n; i++) {
+        items += "(" + i + "," + func(i) + ")";
+        if (i != n) {
+            items += ",";
+        }
+    }
+    items += "]";
+    return items;
+}
+
+var playerState = "empty";
+
+var playerData = function() {
+    return {
+        WIDTH : WIDTH,
+        HEIGHT : HEIGHT,
+        get_my_x : get_my_x(),
+        get_my_y : get_my_y(),
+        get_opponent_x : get_opponent_x(),
+        get_opponent_y : get_opponent_y(),
+        get_board : get_board(),
+        get_my_item_count : render_items(get_my_item_count),
+        get_opponent_item_count : render_items(get_opponent_item_count),
+        get_total_item_count : render_items(get_total_item_count),
+        state : playerState
+    };
+};
+
 var Board = {
     init: function() {
         var fullBoard;
@@ -76,7 +120,13 @@ var Board = {
         // SimpleBot currently doesn't need any sort of init, but if it did, it'd be called here too
     },
     processMove: function() {
-        var myMove = make_move();
+        // TODO do this thru an ajax call to a server instead.
+        // or websockets!
+        socket.send(JSON.stringify(playerData()));
+    },
+    callback: function(move) {
+        console.log("player is moving.");
+        var myMove = move;
         var simpleBotMove = SimpleBot.makeMove();
         if ((Board.myX == Board.oppX) && (Board.myY == Board.oppY) && (myMove == TAKE) && (simpleBotMove == TAKE) && Board.board[Board.myX][Board.myY] > 0) {
             Board.myBotCollected[Board.board[Board.myX][Board.myY]-1] = Board.myBotCollected[Board.board[Board.myX][Board.myY]-1] + 0.5;

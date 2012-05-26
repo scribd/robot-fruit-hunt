@@ -1,0 +1,1 @@
+makeMove = return EAST
