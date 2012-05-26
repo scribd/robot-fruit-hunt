@@ -1,1 +1,0 @@
-makeMove = return EAST

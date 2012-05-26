@@ -5,9 +5,6 @@ import Control.Monad.State
 import Data.Map hiding (filter, null)
 import Debug.Trace (trace)
 
--- One problem with Haskell bindings: you can't have global state!
--- (Because of the way we plan on running this)
-
 type ItemType = Int
 data Move = ERR | EAST | NORTH | WEST | SOUTH | TAKE | PASS deriving (Enum, Eq, Ord)
 

@@ -12,6 +12,6 @@ var Grid = {
                 }
             }
         }
-        img.src="assets/images/FruitCell.png";
+        img.src="../assets/images/FruitCell.png";
     }
 }

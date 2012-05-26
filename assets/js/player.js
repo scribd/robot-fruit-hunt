@@ -15,7 +15,7 @@ var GamePlay = {
         });
 
         GamePlay.show_breadcrumbs = false;
-        var itemImageUrls = ["assets/images/FruitApple.png", "assets/images/FruitBanana.png", "assets/images/FruitCherry.png", "assets/images/FruitMelon.png", "assets/images/FruitOrange.png"];
+        var itemImageUrls = ["../assets/images/FruitApple.png", "../assets/images/FruitBanana.png", "../assets/images/FruitCherry.png", "../assets/images/FruitMelon.png", "../assets/images/FruitOrange.png"];
         GamePlay.itemImages = new Array();
         for (var i=0; i<itemImageUrls.length; i++) {
             var img = new Image();
@@ -23,15 +23,15 @@ var GamePlay = {
             GamePlay.itemImages[i] = img;
         }
         GamePlay.player_one_image = new Image();
-        GamePlay.player_one_image.src = "assets/images/FruitBlueBot.png";
+        GamePlay.player_one_image.src = "../assets/images/FruitBlueBot.png";
         GamePlay.player_two_image = new Image();
-        GamePlay.player_two_image.src = "assets/images/FruitPurpleBot.png";
+        GamePlay.player_two_image.src = "../assets/images/FruitPurpleBot.png";
         GamePlay.visitedImg = new Image();
-        GamePlay.visitedImg.src = "assets/images/FruitCellVisited.png";
+        GamePlay.visitedImg.src = "../assets/images/FruitCellVisited.png";
         GamePlay.bothVisitedImg = new Image();
-        GamePlay.bothVisitedImg.src = "assets/images/FruitCellVisitedBoth.png";
+        GamePlay.bothVisitedImg.src = "../assets/images/FruitCellVisitedBoth.png";
         GamePlay.oppVisitedImg = new Image();
-        GamePlay.oppVisitedImg.src = "assets/images/FruitCellOppVisited.png";
+        GamePlay.oppVisitedImg.src = "../assets/images/FruitCellOppVisited.png";
         GamePlay.itemImages[itemImageUrls.length - 1].onload = function(){
             GamePlay.setupNewGame();
         };

@@ -30,10 +30,11 @@ def make(d)
 end
 
 def run
-    result = `./Main 2>&1`
-    if result =~ /\((\d),(.+)\)/
+    _result = `./Main 2>&1`
+    result = _result.split("\n")
+    if result[-1] =~ /\((\d),(.+)\)/
         captures = $~.to_a
-        [true, {"move" => captures[1].to_i, "state" => captures[2]}.to_json]
+        [true, {"move" => captures[1].to_i, "state" => captures[2], "trace" => result[0, result.size-1].join("\n")}.to_json]
     else
         [false, {"error" => result}.to_json]
     end
