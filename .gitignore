@@ -1,0 +1,6 @@
+*.swp
+*.swo
+*.hi
+*.o
+Main
+Main.hs

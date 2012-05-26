@@ -1,0 +1,27 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../assets/css/drawgame.css"/>
+<script src="../assets/js/board.js"></script>
+<script src="../assets/js/board_hs.js"></script>
+<script src="../assets/js/grid.js"></script>
+<script src="../assets/js/simplebot.js"></script>
+<script src="../assets/js/player.js"></script>
+<script src="../assets/js/jquery.min.js"></script>
+</head>
+<body onload="GamePlay.init()">
+<canvas id="grid"></canvas>
+<canvas id="game_view"></canvas>
+<div id="buttons">
+<span class="newgame button">new</span>
+<span class="reset button">reset</span>
+<span class="pause button">pause</span>
+<span class="play button">play</span>
+<span class="forward button">forward</span>
+<span class=""><label><input type="checkbox" id="check_breadcrumbs"/> Show breadcrumbs</label></span>
+</div>
+<div id="state">
+  <h2>State:</h2>
+  <code class="content"></code>
+</div>
+</body>
+</html>

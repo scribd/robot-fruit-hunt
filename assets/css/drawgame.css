@@ -1,3 +1,4 @@
+
 .button {
    border-top: 1px solid #96d1f8;
    background: #77a7c7;
@@ -32,4 +33,27 @@ canvas {
    position:absolute;
    left:0px;
    top:0px;
+}
+
+#state {
+  float: left;
+  clear: both;
+  margin: 20px;
+  padding: 10px;
+  background-color: #AAA;
+  color: #333;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;  
+}
+
+#state h2{
+  padding: 0;
+  margin: 0;
+  font-weight: normal;
+  font-size: 20px;
+}
+
+#state code {
+  margin: 5px 0;
+  padding: 0;
+  font-size: 16px;
 }

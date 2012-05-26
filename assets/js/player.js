@@ -1,9 +1,10 @@
+var player_lost = false;
 var GamePlay = {
     init: function() {
         GamePlay.canvas = document.getElementById('game_view');
         $('.pause').bind('click', function() { GamePlay.mode = "pause";});
         $('.play').bind('click', function() { GamePlay.mode = "play"; Board.processMove(); GamePlay.draw();});
-        $('.forward').bind('click', function() { Board.processMove(); GamePlay.draw();});
+        $('.forward').bind('click', function() { GamePlay.mode = "play"; Board.processMove(); GamePlay.draw(); GamePlay.mode = "pause";});
         $('.newgame').bind('click', function() { GamePlay.setupNewGame();});
         $('.reset').bind('click', function() { Board.reset();});
         $('#check_breadcrumbs').click(function(evt) {
@@ -15,7 +16,7 @@ var GamePlay = {
         });
 
         GamePlay.show_breadcrumbs = false;
-        var itemImageUrls = ["assets/images/FruitApple.png", "assets/images/FruitBanana.png", "assets/images/FruitCherry.png", "assets/images/FruitMelon.png", "assets/images/FruitOrange.png"];
+        var itemImageUrls = ["../assets/images/FruitApple.png", "../assets/images/FruitBanana.png", "../assets/images/FruitCherry.png", "../assets/images/FruitMelon.png", "../assets/images/FruitOrange.png"];
         GamePlay.itemImages = new Array();
         for (var i=0; i<itemImageUrls.length; i++) {
             var img = new Image();
@@ -23,15 +24,15 @@ var GamePlay = {
             GamePlay.itemImages[i] = img;
         }
         GamePlay.player_one_image = new Image();
-        GamePlay.player_one_image.src = "assets/images/FruitBlueBot.png";
+        GamePlay.player_one_image.src = "../assets/images/FruitBlueBot.png";
         GamePlay.player_two_image = new Image();
-        GamePlay.player_two_image.src = "assets/images/FruitPurpleBot.png";
+        GamePlay.player_two_image.src = "../assets/images/FruitPurpleBot.png";
         GamePlay.visitedImg = new Image();
-        GamePlay.visitedImg.src = "assets/images/FruitCellVisited.png";
+        GamePlay.visitedImg.src = "../assets/images/FruitCellVisited.png";
         GamePlay.bothVisitedImg = new Image();
-        GamePlay.bothVisitedImg.src = "assets/images/FruitCellVisitedBoth.png";
+        GamePlay.bothVisitedImg.src = "../assets/images/FruitCellVisitedBoth.png";
         GamePlay.oppVisitedImg = new Image();
-        GamePlay.oppVisitedImg.src = "assets/images/FruitCellOppVisited.png";
+        GamePlay.oppVisitedImg.src = "../assets/images/FruitCellOppVisited.png";
         GamePlay.itemImages[itemImageUrls.length - 1].onload = function(){
             GamePlay.setupNewGame();
         };
@@ -62,7 +63,7 @@ var GamePlay = {
         GamePlay.drawPlayerOne(ctx, Board.board);
         GamePlay.displayScore(ctx, Board.board);
         if (GamePlay.mode == "play") {
-           if (Board.noMoreItems()) {
+           if (Board.noMoreItems() || player_lost) {
                var score = 0;
                for (var i=0; i<GamePlay.itemTypeCount; i++) {
                    if (Board.myBotCollected[i] > Board.simpleBotCollected[i]) {
@@ -72,17 +73,15 @@ var GamePlay = {
                        score = score - 1;
                    }
                }
-               if (score > 0) {
-                   ctx.font = "30px Arial";
-                   ctx.fillStyle = "#000";
-                   ctx.fillText("You win!", 0, 275);
-               }
-               if (score < 0) {
+               if (score < 0 || player_lost) {
                    ctx.font = "30px Arial";
                    ctx.fillStyle = "#000";
                    ctx.fillText("You lose!", 0, 275);
-               }
-               if (score == 0) {
+               } else if (score > 0) {
+                   ctx.font = "30px Arial";
+                   ctx.fillStyle = "#000";
+                   ctx.fillText("You win!", 0, 275);
+               } else if (score === 0) {
                    ctx.font = "30px Arial";
                    ctx.fillStyle = "#000";
                    ctx.fillText("You tie!", 0, 275);
