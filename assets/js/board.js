@@ -1,13 +1,23 @@
+// TODO gray out the forward button until this move is completed
+// TODO play should wait for one move to finish before sending the next move.
+
 var socket = new WebSocket("ws://localhost:3000/");
+var socket_connected = false;
 socket.onopen = function(){  
+    socket_connected = true;
     console.log("Socket to game server successfully opened.");  
 };
 
 socket.onmessage = function(msg){  
-    console.log(msg);
     var move = JSON.parse(msg.data);
-    playerState = move.state;
-    Board.callback(move.move);
+    if (move.error) {
+        console.log(move.error);
+        // TODO what move signals "bad move, player lost"?
+        Board.callback(0);
+    } else {
+        playerState = move.state;
+        Board.callback(move.move);
+    }
 };
 
 
@@ -122,6 +132,9 @@ var Board = {
     processMove: function() {
         // TODO do this thru an ajax call to a server instead.
         // or websockets!
+        if (!socket_connected) {
+            alert("I am not connected to the server. Please start the server with `ruby eventloop.rb` if you haven't already (and then refresh this page).\nIf you already started the server, your browser may not support websockets.");
+        }
         socket.send(JSON.stringify(playerData()));
     },
     callback: function(move) {

@@ -7,28 +7,35 @@ HOST = "0.0.0.0"
 PORT = "3000"
 
 def make(d)
+    `rm Main Main.hs Main.hi Main.o`
     api = File.open("GameAPI.hs", "r").read
     api = sprintf(api, d["WIDTH"], d["HEIGHT"], d["get_my_x"], d["get_my_y"], d["get_opponent_x"], d["get_opponent_y"], d["get_board"].inspect, d["get_my_item_count"], d["get_opponent_item_count"], d["get_total_item_count"], d["state"])
-    api += "\n" + File.open("MyBot.hs", "r").read
+    mybot = File.open("MyBot.hs", "r").readlines
+    mybot.each do |line|
+      if line =~ /^import .+/
+        api = line + api
+      else
+        api += line
+      end
+    end
     f = File.open("Main.hs", "w+")
     f.write(api)
     f.close
-    msg = `ghc --make Main.hs`
+    msg = `ghc --make Main.hs 2>&1`
     if $?.exitstatus != 0
-      [false, msg]
+      [false, {"error" => msg}.to_json]
     else
       [true, ""]
     end
 end
 
 def run
-    result = `./Main`
+    result = `./Main 2>&1`
     if result =~ /\((\d),(.+)\)/
         captures = $~.to_a
-        return [false, ""] if captures[1] == 0
         [true, {"move" => captures[1].to_i, "state" => captures[2]}.to_json]
     else
-        [false, result]
+        [false, {"error" => result}.to_json]
     end
 end
 
@@ -42,11 +49,9 @@ EM.run {
         ws.onmessage { |msg|
           puts "Recieved message: #{msg}"
           result, msg = make(JSON.parse(msg))
-          return ws.send("Error: #{msg}") unless result
+          ws.send(msg) unless result
 
           result, move = run
-          return ws.send("Error: #{msg}") unless result
-
           ws.send move
         }
     end
