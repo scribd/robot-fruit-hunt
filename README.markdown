@@ -34,6 +34,6 @@ Start the game server with `ruby gameserver.rb`.
 
 Modify `MyBot.hs` to start writing your bot. Opening `game.html` will allow you to generate random boards, and either watch your bot play or step through one move at a time. gl/hf!
 
-Read about the Haskell API in [HaskellAPI.markdown](haskell/HaskellAPI.markdown).
+Read about the Haskell API in `haskell/HaskellAPI.markdown`.
 
 You can disable the opponent by following the steps listed in the Javascript section above.
