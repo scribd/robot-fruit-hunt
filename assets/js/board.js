@@ -96,15 +96,26 @@ var Board = {
             if (Board.myY - 1 >= 0) {
                 Board.myY = Board.myY - 1;
             }
+        } else if (myMove == SOUTH) {
+            if (Board.myY + 1 < HEIGHT) {
+                Board.myY = Board.myY + 1;
+            }
+        } else if (myMove == EAST) {
+            if (Board.myX + 1 < WIDTH) {
+                Board.myX = Board.myX + 1;
+            }
+        } else if (myMove == WEST) {
+            if (Board.myX - 1 >= 0) {
+                Board.myX = Board.myX - 1;
+            }
+        } else if (myMove != TAKE && myMove != PASS) {
+            console.log("Invalid Move: " + myMove);
+            player_lost = true;
         }
+
         if (simpleBotMove == NORTH) {
             if (Board.oppY - 1 >= 0) {
                 Board.oppY = Board.oppY - 1;
-            }
-        }
-        if (myMove == SOUTH) {
-            if (Board.myY + 1 < HEIGHT) {
-                Board.myY = Board.myY + 1;
             }
         }
         if (simpleBotMove == SOUTH) {
@@ -112,19 +123,9 @@ var Board = {
                 Board.oppY = Board.oppY + 1;
             }
         }
-        if (myMove == EAST) {
-            if (Board.myX + 1 < WIDTH) {
-                Board.myX = Board.myX + 1;
-            }
-        }
         if (simpleBotMove == EAST) {
             if (Board.oppX + 1 < WIDTH) {
                 Board.oppX = Board.oppX + 1;
-            }
-        }
-        if (myMove == WEST) {
-            if (Board.myX - 1 >= 0) {
-                Board.myX = Board.myX - 1;
             }
         }
         if (simpleBotMove == WEST) {

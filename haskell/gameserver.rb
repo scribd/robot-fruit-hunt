@@ -36,7 +36,7 @@ def run
         captures = $~.to_a
         [true, {"move" => captures[1].to_i, "state" => captures[2], "trace" => result[0, result.size-1].join("\n")}.to_json]
     else
-        [false, {"error" => result}.to_json]
+        [false, {"error" => result.join("\n")}.to_json]
     end
 end
 

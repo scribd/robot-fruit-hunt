@@ -1,3 +1,4 @@
+var player_lost = false;
 var GamePlay = {
     init: function() {
         GamePlay.canvas = document.getElementById('game_view');
@@ -62,7 +63,7 @@ var GamePlay = {
         GamePlay.drawPlayerOne(ctx, Board.board);
         GamePlay.displayScore(ctx, Board.board);
         if (GamePlay.mode == "play") {
-           if (Board.noMoreItems()) {
+           if (Board.noMoreItems() || player_lost) {
                var score = 0;
                for (var i=0; i<GamePlay.itemTypeCount; i++) {
                    if (Board.myBotCollected[i] > Board.simpleBotCollected[i]) {
@@ -72,17 +73,15 @@ var GamePlay = {
                        score = score - 1;
                    }
                }
-               if (score > 0) {
-                   ctx.font = "30px Arial";
-                   ctx.fillStyle = "#000";
-                   ctx.fillText("You win!", 0, 275);
-               }
-               if (score < 0) {
+               if (score < 0 || player_lost) {
                    ctx.font = "30px Arial";
                    ctx.fillStyle = "#000";
                    ctx.fillText("You lose!", 0, 275);
-               }
-               if (score == 0) {
+               } else if (score > 0) {
+                   ctx.font = "30px Arial";
+                   ctx.fillStyle = "#000";
+                   ctx.fillText("You win!", 0, 275);
+               } else if (score === 0) {
                    ctx.font = "30px Arial";
                    ctx.fillStyle = "#000";
                    ctx.fillText("You tie!", 0, 275);
