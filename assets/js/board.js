@@ -136,13 +136,8 @@ var Board = {
             }
         }
 
-        if (Board.myX == Board.oppX && Board.myY == Board.oppY) {
-            Board.history[Board.myX][Board.myY] = 3;
-        } else {
-            Board.history[Board.myX][Board.myY] = 1;
-            Board.history[Board.oppX][Board.oppY] = 2;
-        }
-
+        Board.history[Board.myX][Board.myY] |= 1;
+        Board.history[Board.oppX][Board.oppY] |= 2;
 
     },
     noMoreItems: function() {
