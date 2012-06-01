@@ -1,12 +1,44 @@
 var Board = {
     init: function(boardNumber) {
         var fullBoard;
+        var min_size = 5;
+        var max_size = 15;
+
+        if (typeof(localStorage) != 'undefined' ) {
+            $("#select_largeboard").show();
+            var val = null;
+            try {
+                val = localStorage.getItem("board");
+            } catch (e) {
+            }
+
+            if (val !== null) {
+                var spl = val.split(';');
+
+                Board.min_size = parseInt(spl[0],10);
+                Board.max_size = parseInt(spl[1],10);
+
+                $("#select_largeboard option").each(function(opt) {
+                    if ($(this).val() == val) {
+                        console.log($(this).val());
+                        $(this).prop('selected', true);
+                    }
+                });
+            }
+
+
+
+            $('#largeboard_dim').change(function(evt) {
+                localStorage.setItem("board", evt.srcElement.value);
+                location.reload();
+            });
+        }
 
         Board.initRandom(boardNumber);
 
         // initialize board
-        HEIGHT = Math.min(Math.floor(Board.random() * 11) + 5, 15);
-        WIDTH = Math.min(Math.floor(Board.random() * 11) + 5, 15);
+        HEIGHT = Math.min(Math.floor(Board.random() * (Board.max_size-Board.min_size+1)) + Board.min_size, Board.max_size);
+        WIDTH = Math.min(Math.floor(Board.random() * (Board.max_size-Board.min_size+1)) + Board.min_size, Board.max_size);
 
         Board.board = new Array(WIDTH);
 
