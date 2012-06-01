@@ -1,10 +1,13 @@
 var Board = {
-    init: function() {
+    init: function(boardNumber) {
         var fullBoard;
 
+        Board.initRandom(boardNumber);
+
         // initialize board
-        HEIGHT = Math.min(Math.floor(Math.random() * 11) + 5, 15);
-        WIDTH = Math.min(Math.floor(Math.random() * 11) + 5, 15);
+        HEIGHT = Math.min(Math.floor(Board.random() * 11) + 5, 15);
+        WIDTH = Math.min(Math.floor(Board.random() * 11) + 5, 15);
+
         Board.board = new Array(WIDTH);
 
         for (var i=0; i<WIDTH; i++) {
@@ -25,7 +28,7 @@ var Board = {
 
         // initialize items on board
         do {
-            Board.numberOfItemTypes = Math.floor(Math.random() * 3 + 3);
+            Board.numberOfItemTypes = Math.floor(Board.random() * 3 + 3);
         } while(Board.numberOfItemTypes * Board.numberOfItemTypes >= HEIGHT * WIDTH)
         Board.totalItems = new Array();
         Board.simpleBotCollected = new Array(Board.numberOfItemTypes);
@@ -38,8 +41,8 @@ var Board = {
             Board.totalItems[i] = i * 2 + 1;
             for (var j=0; j<Board.totalItems[i]; j++) {
                 do {
-                    x = Math.min(Math.floor(Math.random() * WIDTH), WIDTH);
-                    y = Math.min(Math.floor(Math.random() * HEIGHT), HEIGHT);
+                    x = Math.min(Math.floor(Board.random() * WIDTH), WIDTH);
+                    y = Math.min(Math.floor(Board.random() * HEIGHT), HEIGHT);
                 } while (Board.board[x][y] != 0);
                 Board.board[x][y] = i + 1;
             }
@@ -47,8 +50,8 @@ var Board = {
 
         // get them the same starting position
         do {
-            x = Math.min(Math.floor(Math.random() * WIDTH), WIDTH);
-            y = Math.min(Math.floor(Math.random() * HEIGHT), HEIGHT);
+            x = Math.min(Math.floor(Board.random() * WIDTH), WIDTH);
+            y = Math.min(Math.floor(Board.random() * HEIGHT), HEIGHT);
         } while (Board.board[x][y] != 0);
         Board.myX = x;
         Board.myY = y;
@@ -151,6 +154,29 @@ var Board = {
             }
         }
         return true;
+    },
+    initRandom: function(boardNumber) {
+        // Create a random number generator (PRNG) for board
+        // setup use and one for any other use. Doing this
+        // allows us to better control the sequence of numbers
+        // we receive. Only those functions generating random
+        // numbers for board setup should call Board.random().
+
+        Math.seedrandom(boardNumber);
+        Board.boardSetupPRNG = Math.random;
+        Math.seedrandom();
+        Board.normalPRNG = Math.random;
+    },
+    random: function() {
+        // Generate a random number from the board setup 
+        // PRNG and then switch Math.random back to the normal PRNG.
+        var number;
+
+        Math.random = Board.boardSetupPRNG;
+        number = Math.random();
+        Math.random = Board.normalPRNG;
+
+        return number;
     }
 }
 
