@@ -5,30 +5,31 @@ var Board = {
         Board.max_size = 15;
 
         if (typeof(localStorage) != 'undefined' ) {
-            $("#check_largeboard").parent().show();
+            $("#select_largeboard").show();
+            var val = null;
             try {
-                var val = localStorage.getItem("board");
-
-                if (val !== null) {
-                    var spl = val.split(';');
-
-                    Board.min_size = parseInt(spl[0],10);
-                    Board.max_size = parseInt(spl[1],10);
-                }
-
-                if (Board.min_size > 5) {
-                   $("#check_largeboard")[0].checked = true;
-                }
-
+                val = localStorage.getItem("board");
             } catch (e) {
             }
 
-            $('#check_largeboard').click(function(evt) {
-                if (evt.srcElement.checked) {
-                    localStorage.setItem("board", "20;50");
-                } else {
-                    localStorage.setItem("board", "5;15");
-                }
+            if (val !== null) {
+                var spl = val.split(';');
+
+                Board.min_size = parseInt(spl[0],10);
+                Board.max_size = parseInt(spl[1],10);
+
+                $("#select_largeboard option").each(function(opt) {
+                    if ($(this).val() == val) {
+                        console.log($(this).val());
+                        $(this).prop('selected', true);
+                    }
+                });
+            }
+
+
+
+            $('#largeboard_dim').change(function(evt) {
+                localStorage.setItem("board", evt.srcElement.value);
                 location.reload();
             });
         }
@@ -180,9 +181,6 @@ var Board = {
             Board.history[Board.myX][Board.myY] = 1;
             Board.history[Board.oppX][Board.oppY] = 2;
         }
-
-        var elapsed = ((new Date().getTime() - Board.move_start) / 1000).toFixed(2);
-        console.log("["+Board.move_num+"] elapsed time: "+elapsed+"s");
 
     },
     noMoreItems: function() {
