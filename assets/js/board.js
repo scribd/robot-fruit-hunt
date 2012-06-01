@@ -1,8 +1,9 @@
 var Board = {
     init: function(boardNumber) {
         var fullBoard;
-        var min_size = 5;
-        var max_size = 15;
+        Board.min_size = 5;
+        Board.max_size = 15;
+        Board.move_num = 0;
 
         if (typeof(localStorage) != 'undefined' ) {
             $("#select_largeboard").show();
@@ -20,7 +21,6 @@ var Board = {
 
                 $("#select_largeboard option").each(function(opt) {
                     if ($(this).val() == val) {
-                        console.log($(this).val());
                         $(this).prop('selected', true);
                     }
                 });
@@ -111,7 +111,11 @@ var Board = {
         // SimpleBot currently doesn't need any sort of init, but if it did, it'd be called here too
     },
     processMove: function() {
+        Board.move_num++;
+        var move_start = new Date().getTime();
         var myMove = make_move();
+        var elapsed = ((new Date().getTime() - move_start) / 1000).toFixed(2);
+        console.log("["+Board.move_num+"] elapsed time: "+elapsed+"s");
         var simpleBotMove = SimpleBot.makeMove();
         if ((Board.myX == Board.oppX) && (Board.myY == Board.oppY) && (myMove == TAKE) && (simpleBotMove == TAKE) && Board.board[Board.myX][Board.myY] > 0) {
             Board.myBotCollected[Board.board[Board.myX][Board.myY]-1] = Board.myBotCollected[Board.board[Board.myX][Board.myY]-1] + 0.5;
