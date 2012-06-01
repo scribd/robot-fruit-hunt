@@ -175,6 +175,7 @@ var Board = {
             }
         }
 
+<<<<<<< HEAD
         if (Board.myX == Board.oppX && Board.myY == Board.oppY) {
             Board.history[Board.myX][Board.myY] = 3;
         } else {
@@ -182,6 +183,8 @@ var Board = {
             Board.history[Board.oppX][Board.oppY] = 2;
         }
 
+=======
+>>>>>>> a1deec08e4439e19386309cb0f72bdfbdc20ffdf
     },
     noMoreItems: function() {
         for (var i=0; i<WIDTH; i++) {
