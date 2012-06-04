@@ -1,12 +1,44 @@
 var Board = {
     init: function(boardNumber) {
         var fullBoard;
+        Board.min_size = 5;
+        Board.max_size = 15;
+        Board.move_num = 0;
+
+        if (typeof(localStorage) != 'undefined' ) {
+            $("#select_largeboard").show();
+            var val = null;
+            try {
+                val = localStorage.getItem("board");
+            } catch (e) {
+            }
+
+            if (val !== null) {
+                var spl = val.split(';');
+
+                Board.min_size = parseInt(spl[0],10);
+                Board.max_size = parseInt(spl[1],10);
+
+                $("#select_largeboard option").each(function(opt) {
+                    if ($(this).val() == val) {
+                        $(this).prop('selected', true);
+                    }
+                });
+            }
+
+
+
+            $('#largeboard_dim').change(function(evt) {
+                localStorage.setItem("board", evt.srcElement.value);
+                location.reload();
+            });
+        }
 
         Board.initRandom(boardNumber);
 
         // initialize board
-        HEIGHT = Math.min(Math.floor(Board.random() * 11) + 5, 15);
-        WIDTH = Math.min(Math.floor(Board.random() * 11) + 5, 15);
+        HEIGHT = Math.min(Math.floor(Board.random() * (Board.max_size-Board.min_size+1)) + Board.min_size, Board.max_size);
+        WIDTH = Math.min(Math.floor(Board.random() * (Board.max_size-Board.min_size+1)) + Board.min_size, Board.max_size);
 
         Board.board = new Array(WIDTH);
 
@@ -79,7 +111,11 @@ var Board = {
         // SimpleBot currently doesn't need any sort of init, but if it did, it'd be called here too
     },
     processMove: function() {
+        Board.move_num++;
+        var move_start = new Date().getTime();
         var myMove = make_move();
+        var elapsed = ((new Date().getTime() - move_start) / 1000).toFixed(2);
+        console.log("["+Board.move_num+"] elapsed time: "+elapsed+"s");
         var simpleBotMove = SimpleBot.makeMove();
         if ((Board.myX == Board.oppX) && (Board.myY == Board.oppY) && (myMove == TAKE) && (simpleBotMove == TAKE) && Board.board[Board.myX][Board.myY] > 0) {
             Board.myBotCollected[Board.board[Board.myX][Board.myY]-1] = Board.myBotCollected[Board.board[Board.myX][Board.myY]-1] + 0.5;
