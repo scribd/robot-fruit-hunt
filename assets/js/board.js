@@ -176,15 +176,42 @@ var Board = {
         Board.history[Board.oppX][Board.oppY] |= 2;
 
     },
-    noMoreItems: function() {
-        for (var i=0; i<WIDTH; i++) {
-            for (var j=0; j<HEIGHT; j++) {
-                if (Board.board[i][j] != 0) {
-                    return false;
+    checkGameOver: function() {
+        var item_type_score_max = 0,
+            item_type_score_min = 0;
+        var item_types_left = Board.numberOfItemTypes;
+        for (var i=0; i < Board.numberOfItemTypes; i++) {
+            var diff = Board.myBotCollected[i] - Board.simpleBotCollected[i];
+            var numleft = Board.totalItems[i] - Board.myBotCollected[i] - Board.simpleBotCollected[i];
+            var item_score_max = diff + numleft;
+            var item_score_min = diff - numleft;
+            if (item_score_min == 0 && item_score_max == 0) { // tie
+                item_types_left --;
+            } else if (item_score_min >= 0) {
+                item_type_score_max ++; // player 1 could win or tie
+                if (item_score_min > 0) {
+                    item_type_score_min ++; // player 1 wins for this type of fruit
+                    item_types_left --;
                 }
+            } else if (item_score_max <= 0) {
+                item_type_score_min --; // player 2 could win or tie
+                if (item_score_max < 0) {
+                    item_type_score_max --; // player 2 wins
+                    item_types_left --;
+                }
+            } else if(numleft != 0) { // still up in the air
+                item_type_score_min --;
+                item_type_score_max ++;
             }
         }
-        return true;
+        if (item_type_score_max < 0) {
+            return item_type_score_max;
+        } else if (item_type_score_min > 0) {
+            return item_type_score_min;
+        } else if (item_types_left == 0) {
+            return 0;
+        }
+        return;
     },
     initRandom: function(boardNumber) {
         // Create a random number generator (PRNG) for board
