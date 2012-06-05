@@ -86,16 +86,8 @@ var GamePlay = {
         GamePlay.drawPlayerOne(ctx, Board.board);
         GamePlay.displayScore(ctx, Board.board);
         if (GamePlay.mode == "play") {
-           if (Board.noMoreItems()) {
-               var score = 0;
-               for (var i=0; i<GamePlay.itemTypeCount; i++) {
-                   if (Board.myBotCollected[i] > Board.simpleBotCollected[i]) {
-                       score = score + 1;
-                   }
-                   if (Board.myBotCollected[i] < Board.simpleBotCollected[i]) {
-                       score = score - 1;
-                   }
-               }
+           var score = Board.checkGameOver();
+           if (score !== undefined) {
                if (score > 0) {
                    ctx.font = "30px Arial";
                    ctx.fillStyle = "#000";
