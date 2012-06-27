@@ -2,16 +2,23 @@ import Data.Maybe
 import Data.Ord (comparing)
 import Data.List (sortBy)
 
+-- manhattan distance
 dist (x1, y1) (x2, y2) = (abs $ x2 - x1) + (abs $ y2 - y1)
+
+-- positions
 myPos = (getMyX, getMyY)
 oppPos = (getOpponentX, getOpponentY)
 
-when_ :: Bool -> Maybe a -> Maybe a
-when_ cond val = if cond then val else Nothing
+for = flip map
 
+-- get a list of all the positions with items
 allItems :: [(Int, Int)]
-allItems = catMaybes [when_ (isJust $ hasItem (getBoard !! x !! y)) (Just (x, y)) | x <- [0..(width-1)], y <- [0..(height-1)]]
-
+allItems = catMaybes $ for positions $ \(x, y) ->
+              if (isJust . hasItem $ getBoard !! x !! y)
+                then Just (x, y)
+                else Nothing
+ 
+-- all items, sorted by those closest to our bot
 nearestItems :: [(Int, Int)]
 nearestItems = sortBy (comparing $ dist myPos) allItems
 

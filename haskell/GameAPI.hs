@@ -1,15 +1,12 @@
-import Prelude hiding (lookup)
-import Data.Monoid (mconcat)
-import Data.List (nub)
-import Control.Monad.State
-import Data.Map hiding (filter, null)
-import Debug.Trace (trace)
-
 type ItemType = Int
 data Move = ERR | EAST | NORTH | WEST | SOUTH | TAKE | PASS deriving (Enum, Eq, Ord)
 
 instance Show Move where
   show = show . fromEnum
+
+-- convenience function, all positions on the board
+positions :: [(Int, Int)]
+positions = [(x, y) | x <- [0..(width-1)], y <- [0..(height-1)]]
 
 -- c
 width = %d

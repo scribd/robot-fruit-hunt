@@ -1,20 +1,9 @@
 # Welcome!
 
-## Testing a Javascript Bot
+This is the Haskell sandbox for Scribd's [Robot Fruit Hunt](http://www.scribd.com/jobs/botrace).
+It allows you to test your Haskell bots locally before you upload them to Scribd.
 
-`cd javascript`.
-
-Modify `mybot.js` to start writing your bot. Opening `game.html` will allow you to generate random boards, and either watch your bot play or step through one move at a time. Refer to http://www.scribd.com/jobs/botrace_api for available methods. gl/hf!
-
-Scribd.
-
-ps: you should be able to ignore everything in `assets/`, but if you want to disable the opponent bot from playing in `game.html`, go to `assets/simplebot.js` and find:
-
-    makeMove: function() {
-       // to disable to opponent, uncomment the next line
-       // return PASS;
-
-Uncomment the `return PASS;` and your bot will be free to roam the board alone.
+If you want to write a Javascript bot, check out the [JS sandbox](https://github.com/scribd/robot-fruit-hunt).
 
 ## Testing a Haskell Bot
 
@@ -34,6 +23,8 @@ Start the game server with `ruby gameserver.rb`.
 
 Modify `MyBot.hs` to start writing your bot. Opening `game.html` will allow you to generate random boards, and either watch your bot play or step through one move at a time. gl/hf!
 
-Read about the Haskell API in `haskell/HaskellAPI.markdown`.
+### Writing a Bot
 
-You can disable the opponent by following the steps listed in the Javascript section above.
+[Read the tutorial](http://egonschiele.github.com/robot-fruit-hunt).
+
+Then [Check out the Haskell API](http://github.com/egonSchiele/robot-fruit-hunt/blob/master/haskell/HaskellAPI.markdown).
