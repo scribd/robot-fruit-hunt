@@ -18,7 +18,7 @@ def make(d)
     mybot.each do |line|
       f.write(line + "\n")
     end
-    api.each do |line|
+    api.split("\n").each do |line|
       f.write(line + "\n")
     end
     f.close
