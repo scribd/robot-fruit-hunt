@@ -91,17 +91,17 @@ var GamePlay = {
                if (score > 0) {
                    ctx.font = "30px Arial";
                    ctx.fillStyle = "#000";
-                   ctx.fillText("You win!", 0, 275);
+                   ctx.fillText("Player 1 wins!", 0, 275);
                }
                if (score < 0) {
                    ctx.font = "30px Arial";
                    ctx.fillStyle = "#000";
-                   ctx.fillText("You lose!", 0, 275);
+                   ctx.fillText("Player 2 wins!", 0, 275);
                }
                if (score == 0) {
                    ctx.font = "30px Arial";
                    ctx.fillStyle = "#000";
-                   ctx.fillText("You tie!", 0, 275);
+                   ctx.fillText("Player 1 and Player 2 tie!", 0, 275);
                }
                GamePlay.mode = "pause";
                return;
@@ -115,7 +115,7 @@ var GamePlay = {
     displayScore: function(ctx, state) {
         ctx.font = "30px Arial";
         ctx.fillStyle = "#366B76";
-        ctx.fillText("My Bot", 0, 50);
+        ctx.fillText("Player 1", 0, 50);
         ctx.font = "15px Arial";
         ctx.fillStyle = "#000";
         for (var i=0; i<GamePlay.itemTypeCount; i++) {
@@ -124,7 +124,7 @@ var GamePlay = {
         }
         ctx.font = "30px Arial";
         ctx.fillStyle = "#82298E";
-        ctx.fillText("Simple Bot", 0, 125);
+        ctx.fillText("Player 2", 0, 125);
         ctx.font = "15px Arial";
         ctx.fillStyle = "#000";
         for (var i=0; i<GamePlay.itemTypeCount; i++) {

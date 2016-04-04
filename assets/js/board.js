@@ -1,3 +1,4 @@
+// Hacks to make "SimpleBot" player 2 lol
 var Board = {
     init: function(boardNumber) {
         var fullBoard;
@@ -101,14 +102,27 @@ var Board = {
     },
     newGame: function() {
         var new_game_exists = undefined;
+
+        // Attempt to call Player 1 init
         try {
             new_game_exists = new_game;
         } catch(e) {
+          // global "new_game" does not exist
         }
         if(new_game_exists !== undefined) {
             new_game();
         }
-        // SimpleBot currently doesn't need any sort of init, but if it did, it'd be called here too
+
+        // Player 2 init
+        try {
+          new_game_exists = new_game_2;
+        } catch(e) {
+          // global "new_game_2" does not exist
+        }
+
+        if (new_game_exists !== undefined) {
+          new_game_2();
+        }
     },
     processMove: function() {
         Board.move_num++;
