@@ -1,7 +1,7 @@
-function new_game() {
+function new_game_2() {
 }
 
-function make_move() {
+function make_move_2() {
    var board = get_board();
 
    // we found an item! take it!
