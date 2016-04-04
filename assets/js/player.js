@@ -87,21 +87,22 @@ var GamePlay = {
         GamePlay.displayScore(ctx, Board.board);
         if (GamePlay.mode == "play") {
            var score = Board.checkGameOver();
+           Board.checkTimeout();
            if (score !== undefined) {
                if (score > 0) {
                    ctx.font = "30px Arial";
                    ctx.fillStyle = "#000";
-                   ctx.fillText("Player 1 wins!", 0, 275);
+                   ctx.fillText("[REPLACE_WITH_PLAYER_1] wins!", 0, 275);
                }
                if (score < 0) {
                    ctx.font = "30px Arial";
                    ctx.fillStyle = "#000";
-                   ctx.fillText("Player 2 wins!", 0, 275);
+                   ctx.fillText("[REPLACE_WITH_PLAYER_2] wins!", 0, 275);
                }
                if (score == 0) {
                    ctx.font = "30px Arial";
                    ctx.fillStyle = "#000";
-                   ctx.fillText("Player 1 and Player 2 tie!", 0, 275);
+                   ctx.fillText("Tie!", 0, 275);
                }
                GamePlay.mode = "pause";
                return;
@@ -115,7 +116,7 @@ var GamePlay = {
     displayScore: function(ctx, state) {
         ctx.font = "30px Arial";
         ctx.fillStyle = "#366B76";
-        ctx.fillText("Player 1", 0, 50);
+        ctx.fillText("[REPLACE_WITH_PLAYER_1]", 0, 50);
         ctx.font = "15px Arial";
         ctx.fillStyle = "#000";
         for (var i=0; i<GamePlay.itemTypeCount; i++) {
@@ -124,7 +125,7 @@ var GamePlay = {
         }
         ctx.font = "30px Arial";
         ctx.fillStyle = "#82298E";
-        ctx.fillText("Player 2", 0, 125);
+        ctx.fillText("[REPLACE_WITH_PLAYER_2]", 0, 125);
         ctx.font = "15px Arial";
         ctx.fillStyle = "#000";
         for (var i=0; i<GamePlay.itemTypeCount; i++) {

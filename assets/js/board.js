@@ -105,12 +105,12 @@ var Board = {
 
         // Attempt to call Player 1 init
         try {
-            new_game_exists = new_game;
+            new_game_exists = new_game_1;
         } catch(e) {
           // global "new_game" does not exist
         }
         if(new_game_exists !== undefined) {
-            new_game();
+            new_game_1();
         }
 
         // Player 2 init
@@ -123,13 +123,22 @@ var Board = {
         if (new_game_exists !== undefined) {
           new_game_2();
         }
+
+        Board.start_time = new Date().getTime();
+    },
+    checkTimeout: function() {
+        var elapsed = ((new Date().getTime() - Board.start_time) / 1000).toFixed(2);
+        console.log("Game ["+Board.move_num+"] elapsed time: "+elapsed+"s");
+        return elapsed >= 60;
     },
     processMove: function() {
         Board.move_num++;
         var move_start = new Date().getTime();
-        var myMove = make_move();
+        var myMove = make_move_1();
+
         var elapsed = ((new Date().getTime() - move_start) / 1000).toFixed(2);
         console.log("["+Board.move_num+"] elapsed time: "+elapsed+"s");
+
         var simpleBotMove = make_move_2();
         if ((Board.myX == Board.oppX) && (Board.myY == Board.oppY) && (myMove == TAKE) && (simpleBotMove == TAKE) && Board.board[Board.myX][Board.myY] > 0) {
             Board.myBotCollected[Board.board[Board.myX][Board.myY]-1] = Board.myBotCollected[Board.board[Board.myX][Board.myY]-1] + 0.5;
@@ -225,6 +234,7 @@ var Board = {
         } else if (item_types_left == 0) {
             return 0;
         }
+
         return;
     },
     initRandom: function(boardNumber) {
