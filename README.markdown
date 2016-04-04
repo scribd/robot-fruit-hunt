@@ -1,3 +1,6 @@
+## Please Note
+This is a fork of Scribd's [robot-fruit-hunt](https://github.com/scribd/robot-fruit-hunt). Modifications here allow two human-written bots to play each other instead of relying on SimpleBot. It also contains some (very) hacky templating features to easily find where to replace Player 1 and Player 2 names.
+
 ## Welcome!
 
 Modify mybot.js to start writing your bot. Opening game.html will allow you to generate random boards, and either watch your bot play or step through one move at a time. Refer [here](http://fruitbots.org/api/api) for available methods. gl/hf! - Scribd.
