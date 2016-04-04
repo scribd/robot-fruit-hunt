@@ -116,7 +116,7 @@ var Board = {
         var myMove = make_move();
         var elapsed = ((new Date().getTime() - move_start) / 1000).toFixed(2);
         console.log("["+Board.move_num+"] elapsed time: "+elapsed+"s");
-        var simpleBotMove = SimpleBot.makeMove();
+        var simpleBotMove = make_move_2();
         if ((Board.myX == Board.oppX) && (Board.myY == Board.oppY) && (myMove == TAKE) && (simpleBotMove == TAKE) && Board.board[Board.myX][Board.myY] > 0) {
             Board.myBotCollected[Board.board[Board.myX][Board.myY]-1] = Board.myBotCollected[Board.board[Board.myX][Board.myY]-1] + 0.5;
             Board.simpleBotCollected[Board.board[Board.oppX][Board.oppY]-1] = Board.simpleBotCollected[Board.board[Board.oppX][Board.oppY]-1] + 0.5;
