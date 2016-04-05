@@ -41,7 +41,7 @@ function dh_isItWorthIt(fruitType) {
       totalFruitCount[i] = get_total_item_count(i+1);
    }
 
-   if (opponentFruitCount[fruitType] > (myFruitCount[fruitType] / 2))
+   if (opponentFruitCount[fruitType] > (totalFruitCount[fruitType] / 2))
       return 0;
 
    return 1;
