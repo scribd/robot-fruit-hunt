@@ -4,16 +4,21 @@ function new_game() {
 function make_move() {
    var board = get_board();
 
-   var currentPositionFruitType = board[get_my_x()][get_my_y()];
-   // we found an item! take it!
-   if (currentPositionFruitType > 0 && dh_isItWorthIt(currentPositionFruitType)) {
-         return TAKE;
-   }
+   
    
    var closestFruitList = dh_closestFruitList();
    for (var i = 0; i < closestFruitList.length; i++) {
       if (dh_isItWorthIt(closestFruitList[i].fruitType)) {
-         return dh_goTo(closestFruitList[i].x, closestFruitList[i].y);
+         var weShouldGoTo = dh_goTo(closestFruitList[i].x, closestFruitList[i].y);
+         if (weShouldGoTo == PASS) {
+            // Moved eat logic into this loop because of board # 218298
+            var currentPositionFruitType = board[get_my_x()][get_my_y()];
+            // we found an item! take it!
+            if (currentPositionFruitType > 0) {
+                  return TAKE;
+            }
+         }
+         return weShouldGoTo;
       }
    }
 
@@ -99,10 +104,14 @@ function dh_closestFruitList() {
 
    fruitList.sort(function (a,b) {
       var distance = dh_distance(myX, myY, a.x, a.y) - dh_distance(myX, myY, b.x, b.y);
-      if (distance == 0) {
+      if (distance == 0 || Math.abs(distance) < 2) {
          // The tie breaker is which fruit type has the least number remaining
-         return (get_total_item_count(a.fruitType) - get_my_item_count(a.fruitType) - get_opponent_item_count(a.fruitType))
-              - (get_total_item_count(b.fruitType) - get_my_item_count(b.fruitType) - get_opponent_item_count(b.fruitType));
+         // To try and win board # 159480 I added a "if the distance diff is close go for the one with fewer left"
+         var fruitCountDiff = (get_total_item_count(a.fruitType) - get_my_item_count(a.fruitType) - get_opponent_item_count(a.fruitType))
+                            - (get_total_item_count(b.fruitType) - get_my_item_count(b.fruitType) - get_opponent_item_count(b.fruitType));
+
+         if (distance == 0 || fruitCountDiff != 0)
+            return fruitCountDiff;
       }
       return distance;
    });
