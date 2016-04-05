@@ -30,17 +30,18 @@ function make_move() {
 // Helper function to decide whether this fruit is worth getting. 1 is yes, 0 is no
 function dh_isItWorthIt(fruitType) {
    var board = get_board();
-   //var myFruitCount = [];
+   var myFruitCount = [];
    var opponentFruitCount = [];
    var totalFruitCount = [];
    
    for (var i = 1; i <= get_number_of_item_types(); i++) {
-      //myFruitCount[i] = get_my_item_count(i);
+      myFruitCount[i] = get_my_item_count(i);
       opponentFruitCount[i] = get_opponent_item_count(i);
       totalFruitCount[i] = get_total_item_count(i);
    }
 
-   if (opponentFruitCount[fruitType] > (totalFruitCount[fruitType] / 2))
+   if ((opponentFruitCount[fruitType] > (totalFruitCount[fruitType] / 2))
+    || (myFruitCount[fruitType] > (totalFruitCount[fruitType] / 2)))
       return 0;
 
    return 1;
