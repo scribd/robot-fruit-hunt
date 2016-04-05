@@ -99,10 +99,14 @@ function dh_closestFruitList() {
 
    fruitList.sort(function (a,b) {
       var distance = dh_distance(myX, myY, a.x, a.y) - dh_distance(myX, myY, b.x, b.y);
-      if (distance == 0) {
+      if (distance == 0 || Math.abs(distance) < 2) {
          // The tie breaker is which fruit type has the least number remaining
-         return (get_total_item_count(a.fruitType) - get_my_item_count(a.fruitType) - get_opponent_item_count(a.fruitType))
-              - (get_total_item_count(b.fruitType) - get_my_item_count(b.fruitType) - get_opponent_item_count(b.fruitType));
+         // To try and win board # 159480 I added a "if the distance is close go for the smaller number left"
+         var fruitCountDiff = (get_total_item_count(a.fruitType) - get_my_item_count(a.fruitType) - get_opponent_item_count(a.fruitType))
+                            - (get_total_item_count(b.fruitType) - get_my_item_count(b.fruitType) - get_opponent_item_count(b.fruitType));
+
+         if (distance == 0 || fruitCountDiff != 0)
+            return fruitCountDiff;
       }
       return distance;
    });
