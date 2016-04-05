@@ -100,7 +100,7 @@ function dh_closestFruitList() {
    fruitList.sort(function (a,b) {
       var distance = dh_distance(myX, myY, a.x, a.y) - dh_distance(myX, myY, b.x, b.y);
       if (distance == 0) {
-         // The tie breaker is which fruit type has the last number remaining
+         // The tie breaker is which fruit type has the least number remaining
          return (get_total_item_count(a.fruitType) - get_my_item_count(a.fruitType) - get_opponent_item_count(a.fruitType))
               - (get_total_item_count(b.fruitType) - get_my_item_count(b.fruitType) - get_opponent_item_count(b.fruitType));
       }
