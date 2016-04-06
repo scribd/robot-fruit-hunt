@@ -93,16 +93,19 @@ var GamePlay = {
                    ctx.font = "30px Arial";
                    ctx.fillStyle = "#000";
                    ctx.fillText("Player 1 wins!", 0, 275);
+                   console.log("Player 1 wins!");
                }
                if (score < 0) {
                    ctx.font = "30px Arial";
                    ctx.fillStyle = "#000";
                    ctx.fillText("Player 2 wins!", 0, 275);
+                   console.log("Player 2 wins!");
                }
                if (score == 0) {
                    ctx.font = "30px Arial";
                    ctx.fillStyle = "#000";
                    ctx.fillText("Tie!", 0, 275);
+                   console.log("Tie!");
                }
                GamePlay.mode = "pause";
                return;
