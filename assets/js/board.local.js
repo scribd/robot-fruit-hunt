@@ -105,12 +105,12 @@ var Board = {
 
         // Attempt to call Player 1 init
         try {
-            new_game_exists = new_game_1;
+            new_game_exists = new_game;
         } catch(e) {
           // global "new_game" does not exist
         }
         if(new_game_exists !== undefined) {
-            new_game_1();
+            new_game();
         }
 
         // Player 2 init
@@ -134,7 +134,7 @@ var Board = {
     processMove: function() {
         Board.move_num++;
         var move_start = new Date().getTime();
-        var myMove = make_move_1();
+        var myMove = make_move();
 
         var elapsed = ((new Date().getTime() - move_start) / 1000).toFixed(2);
         console.log("["+Board.move_num+"] elapsed time: "+elapsed+"s");

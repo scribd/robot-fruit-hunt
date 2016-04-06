@@ -92,14 +92,14 @@ var GamePlay = {
                if (score > 0) {
                    ctx.font = "30px Arial";
                    ctx.fillStyle = "#000";
-                   ctx.fillText("[REPLACE_WITH_PLAYER_1] wins!", 0, 275);
-                   console.log("[REPLACE_WITH_PLAYER_1] wins!");
+                   ctx.fillText("Player 1 wins!", 0, 275);
+                   console.log("Player 1 wins!");
                }
                if (score < 0) {
                    ctx.font = "30px Arial";
                    ctx.fillStyle = "#000";
-                   ctx.fillText("[REPLACE_WITH_PLAYER_2] wins!", 0, 275);
-                   console.log("[REPLACE_WITH_PLAYER_2] wins!");
+                   ctx.fillText("Player 2 wins!", 0, 275);
+                   console.log("Player 2 wins!");
                }
                if (score == 0) {
                    ctx.font = "30px Arial";
@@ -119,7 +119,7 @@ var GamePlay = {
     displayScore: function(ctx, state) {
         ctx.font = "30px Arial";
         ctx.fillStyle = "#366B76";
-        ctx.fillText("[REPLACE_WITH_PLAYER_1]", 0, 50);
+        ctx.fillText("Player 1", 0, 50);
         ctx.font = "15px Arial";
         ctx.fillStyle = "#000";
         for (var i=0; i<GamePlay.itemTypeCount; i++) {
@@ -128,7 +128,7 @@ var GamePlay = {
         }
         ctx.font = "30px Arial";
         ctx.fillStyle = "#82298E";
-        ctx.fillText("[REPLACE_WITH_PLAYER_2]", 0, 125);
+        ctx.fillText("Player 2", 0, 125);
         ctx.font = "15px Arial";
         ctx.fillStyle = "#000";
         for (var i=0; i<GamePlay.itemTypeCount; i++) {
