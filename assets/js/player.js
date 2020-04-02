@@ -42,7 +42,7 @@ var GamePlay = {
     },
     setupNewGame: function(boardNumber) {
         // Create a new board setup according to the following priority:
-        // 
+        //
         // 1. If a board number is passed in, use that.
         // 2. If the bot has default_board_number() defined, use that.
         // 3. Generate a random board number.
@@ -91,17 +91,17 @@ var GamePlay = {
                if (score > 0) {
                    ctx.font = "30px Arial";
                    ctx.fillStyle = "#000";
-                   ctx.fillText("You win!", 0, 275);
+                   ctx.fillText(BOT_1.get_name() + " Wins!", 0, 275);
                }
                if (score < 0) {
                    ctx.font = "30px Arial";
                    ctx.fillStyle = "#000";
-                   ctx.fillText("You lose!", 0, 275);
+                   ctx.fillText(BOT_2.get_name() + " Wins!", 0, 275);
                }
                if (score == 0) {
                    ctx.font = "30px Arial";
                    ctx.fillStyle = "#000";
-                   ctx.fillText("You tie!", 0, 275);
+                   ctx.fillText("Tie Game!", 0, 275);
                }
                GamePlay.mode = "pause";
                return;
@@ -115,7 +115,7 @@ var GamePlay = {
     displayScore: function(ctx, state) {
         ctx.font = "30px Arial";
         ctx.fillStyle = "#366B76";
-        ctx.fillText("My Bot", 0, 50);
+        ctx.fillText(BOT_1.get_name(), 0, 50);
         ctx.font = "15px Arial";
         ctx.fillStyle = "#000";
         for (var i=0; i<GamePlay.itemTypeCount; i++) {
@@ -124,7 +124,7 @@ var GamePlay = {
         }
         ctx.font = "30px Arial";
         ctx.fillStyle = "#82298E";
-        ctx.fillText("Simple Bot", 0, 125);
+        ctx.fillText(BOT_2.get_name(), 0, 125);
         ctx.font = "15px Arial";
         ctx.fillStyle = "#000";
         for (var i=0; i<GamePlay.itemTypeCount; i++) {

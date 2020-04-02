@@ -1,14 +1,33 @@
-// this is your opponent in the real-time player to use for debugging 
+// this is your opponent in the real-time player to use for debugging
 
 var SimpleBot = {
-    makeMove: function() {
+    // Use these functions for compatibility with testing framework
+    // ex: "this.get_my_x"
+    get_my_x: get_my_x ,
+    get_my_y: get_my_y ,
+    get_opponent_x: get_opponent_x ,
+    get_opponent_y: get_opponent_y ,
+
+    get_name: function()
+    {
+        return "SimpleBot";
+    } ,
+
+
+    // Called when starting a new_game
+    new_game: function()
+    {
+    } ,
+
+    // Called to make a move
+    make_move: function() {
        // to disable to opponent, uncomment the next line
        // return PASS;
 
        SimpleBot.board = get_board();
 
        // we found an item! take it!
-       if (has_item(SimpleBot.board[get_opponent_x()][get_opponent_y()])) {
+       if (has_item(SimpleBot.board[this.get_my_x()][this.get_my_y()])) {
            return TAKE;
        }
 
@@ -23,8 +42,9 @@ var SimpleBot = {
        }
 
        // let's find the move that will start leading us to the closest item
-       return SimpleBot.findMove(new node(get_opponent_x(), get_opponent_y(), -1));
+       return SimpleBot.findMove(new node(this.get_my_x(), this.get_my_y(), -1));
     },
+
 
     findMove: function(n) {
        // closest item! we will go to it
@@ -37,33 +57,33 @@ var SimpleBot = {
        if (SimpleBot.considerMove(n.x, n.y-1)) {
            if (n.move == -1) {
                possibleMove = NORTH;
-           } 
+           }
            SimpleBot.toConsider.push(new node(n.x, n.y-1, possibleMove));
-       } 
+       }
 
        // SOUTH
        if (SimpleBot.considerMove(n.x, n.y+1)) {
            if (n.move == -1) {
                possibleMove = SOUTH;
-           } 
+           }
            SimpleBot.toConsider.push(new node(n.x, n.y+1, possibleMove));
-       } 
+       }
 
        // WEST
        if (SimpleBot.considerMove(n.x-1, n.y)) {
            if (n.move == -1) {
                possibleMove = WEST;
-           } 
+           }
            SimpleBot.toConsider.push(new node(n.x-1, n.y, possibleMove));
-       } 
+       }
 
-       // EAST 
+       // EAST
        if (SimpleBot.considerMove(n.x+1, n.y)) {
            if (n.move == -1) {
                possibleMove = EAST;
-           } 
+           }
            SimpleBot.toConsider.push(new node(n.x+1, n.y, possibleMove));
-       } 
+       }
 
        // take next node to bloom out from
        if (SimpleBot.toConsider.length > 0) {
