@@ -7,15 +7,17 @@
 //}
 
 // These are what you want to touch
-BOT_2 = RandoBot
-BOT_1 = SimpleBot
+BOT_1 = RandoBot
+BOT_2 = SimpleBot
 
 
 // Reverse for BOT_2
 BOT_2.get_my_x = get_opponent_x
 BOT_2.get_my_y = get_opponent_y
-BOT_2.get_opponent_x = get_opponent_x
-BOT_2.get_opponent_y = get_opponent_y
+BOT_2.get_my_item_count = get_opponent_item_count
+BOT_2.get_opponent_x = get_my_x
+BOT_2.get_opponent_y = get_my_y
+BOT_2.get_opponent_item_count = get_my_item_count
 
 function make_move()
 {

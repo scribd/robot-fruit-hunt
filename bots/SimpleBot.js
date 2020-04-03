@@ -1,12 +1,14 @@
-// this is your opponent in the real-time player to use for debugging
+// Baseline opponent, goes to and grabs the closest fruit
 
 var SimpleBot = {
     // Use these functions for compatibility with testing framework
-    // ex: "this.get_my_x"
+    // ex: "this.get_my_x()"
     get_my_x: get_my_x ,
     get_my_y: get_my_y ,
+    get_my_item_count: get_my_item_count ,
     get_opponent_x: get_opponent_x ,
     get_opponent_y: get_opponent_y ,
+    get_opponent_item_count: get_opponent_item_count ,
 
     get_name: function()
     {

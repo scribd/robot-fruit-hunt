@@ -2,10 +2,13 @@
 var TemplateBot =
 {
     // Call these with "this". Works with the template framework better
+    // These are functions
     get_my_x: get_my_x ,
     get_my_y: get_my_y ,
+    get_my_item_count: get_my_item_count ,
     get_opponent_x: get_opponent_x ,
     get_opponent_y: get_opponent_y ,
+    get_opponent_item_count: get_opponent_item_count ,
 
     // For the display name
     get_name: function()
