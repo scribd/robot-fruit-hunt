@@ -13,7 +13,7 @@ var TemplateBot =
     // For the display name
     get_name: function()
     {
-        return "Template Bot"
+        return "TemplateBot"
     } ,
 
     // For you to use when a new game is started

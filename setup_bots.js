@@ -6,9 +6,17 @@
 //    return 123;
 //}
 
-// These are what you want to touch
+// These are what you want to touch for gather_win_stats.html
+BOTS_TO_TEST = [TemplateBot, RandoBot, SimpleBot]
+GAMES_TO_PLAY = 1000
+MAX_MOVES = 1000 // Maximum number of moves that can occur before game is terminated as "unfinished"
+OUTPUT_FOLDER = "output"
+
+// These are what you want to touch for game.html
 BOT_1 = RandoBot
 BOT_2 = SimpleBot
+// BOT_1 = TemplateBot
+// BOT_2 = TemplateBot
 
 
 // Reverse for BOT_2

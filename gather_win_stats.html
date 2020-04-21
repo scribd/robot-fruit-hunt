@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="assets/css/drawgame.css"/>
+    <meta charset='UTF-8'>
+    <script src="assets/js/seedrandom.js"></script>
+    <script src="assets/js/board.js"></script>
+    <script src="assets/js/grid.js"></script>
+    <script src="assets/js/player.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
+
+    <script src="bots/template.js"></script>
+    <script src="bots/RandoBot.js"></script>
+    <script src="bots/SimpleBot.js"></script>
+
+    <script src="setup_bots.js"></script>
+    <script src="automate_games.js"></script>
+
+</head>
+<body onload="Automate.init()">
+    <label>Number of games: </label>
+    <label id="NumGames">0</label>
+    <br/>
+    <br/>
+    <label>CSV_Format:</label>
+    <br/>
+    <label>Bot1 vs. Bot2 , NumWon_Bot1 , NumWon_Bot2 , NumTied , NumUnfinished </label>
+    <br/>
+    <br/>
+    <span class="play button">play</span>
+    <br/>
+    <br/>
+    <label id="Games">Results will display here. Recommend you open the console before pressing play.</label>
+</body>
+</html>
